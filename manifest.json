@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "CUNY ProEd Light Mode",
+  "version": "1.0",
+  "description": "Adds a light mode toggle to CUNY ProEd website",
+  "permissions": [
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://cuny.proed.org/*"],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["Images/*"],
+      "matches": ["https://cuny.proed.org/*"]
+    }
+  ]
+}
