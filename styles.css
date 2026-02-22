@@ -300,10 +300,10 @@ body.light-mode .hero-header #filterContainer .control-label.col-xs-4 {
 
 /* Center filterContainer on Deactivations page but keep it wide */
 body.light-mode .hero-header #filterContainer {
-  max-width: 1400px !important;
+  max-width: 100% !important;
   margin: 0 auto !important;
-  padding-left: 15% !important;
-  padding-right: 0% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 /* Center filter button */
@@ -328,11 +328,12 @@ body.light-mode .hero-header h2 {
 /* ===== FORM CONTAINER - MATCHING STATUS DETAILS EXACTLY ===== */
 body.light-mode #filterContainer {
   background: transparent !important;
-  padding: 20px 10% !important;
+  padding: 20px 0 !important;
   max-width: 100% !important;
   margin: 0 auto !important;
   box-shadow: none !important;
   border-radius: 0 !important;
+  box-sizing: border-box !important;
 }
 
 /* First row - Verification Type and Group centered and side by side */
@@ -398,55 +399,23 @@ body.light-mode select.form-control.single-option-disabled:hover {
   border-color: #555555 !important;
 }
 
-/* Single column layout for all dropdowns */
-body.light-mode #filterContainer .col-lg-4 {
-  width: 100% !important;
+/* Force filterContainer inner row to stack columns vertically */
+body.light-mode #filterContainer .form-group.row {
+  display: block !important;
+}
+
+/* Single column layout for all dropdowns - centered, matching top row width */
+body.light-mode #filterContainer .col-lg-4,
+body.light-mode #filterContainer .col-lg-6 {
+  float: none !important;
+  width: 50% !important;
+  margin: 0 auto !important;
   padding-left: 0 !important;
   padding-right: 0 !important;
+  box-sizing: border-box !important;
 }
 
 /* ===== CHECKBOXES - HORIZONTAL LAYOUT FOR BOTH PAGES ===== */
-
-/* Status Details page - Third column layout */
-body.light-mode #filterContainer .col-lg-4:last-child,
-body.light-mode #filterContainer .form-group .col-lg-4[style*="line-height"] {
-  display: block !important;
-  line-height: normal !important;
-  width: 100% !important;
-}
-
-/* Make Created dropdown full width like other dropdowns */
-body.light-mode #filterContainer .col-lg-4 select,
-body.light-mode #filterContainer .col-lg-4:last-child select {
-  width: 100% !important;
-  display: block !important;
-  margin-bottom: 15px !important;
-  margin-left: 0 !important;
-}
-
-/* Container for all checkbox rows - make them horizontal */
-body.light-mode #filterContainer .col-lg-4:last-child {
-  display: flex !important;
-  flex-direction: column !important;
-}
-
-/* Wrapper for just the checkboxes (after the dropdown) */
-body.light-mode #filterContainer .col-lg-4:last-child > select ~ .row {
-  display: inline-flex !important;
-  width: auto !important;
-  margin-right: 20px !important;
-  margin-bottom: 0 !important;
-}
-
-/* Force horizontal layout for checkbox rows */
-body.light-mode #filterContainer .col-lg-4 .row {
-  display: inline-flex !important;
-  flex-direction: row !important;
-  align-items: center !important;
-  margin: 0 20px 0 0 !important;
-  width: auto !important;
-  float: none !important;
-}
 
 /* Hide all br tags in checkbox area */
 body.light-mode #filterContainer .col-lg-4 br,
@@ -835,4 +804,9 @@ body.light-mode a.list-group-item.sideMenuSelection:hover {
 body.light-mode .proed-header-logo img,
 body.light-mode .navbar-brand img {
   filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.3)) drop-shadow(0 0 3px rgba(0, 0, 0, 0.4)) !important;
+}
+/* ===== WINDOWS SCROLLBAR FIX ===== */
+/* Prevents layout shift from Windows scrollbar width */
+html {
+  scrollbar-gutter: stable;
 }

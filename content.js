@@ -163,69 +163,86 @@ function restructureDashboard() {
       form.removeChild(form.firstChild);
     }
 
-    // Create wrapper div with margin-top matching Status Details
+    // Create wrapper div centered - no Bootstrap classes, pure flexbox
     const wrapper = document.createElement('div');
     wrapper.style.marginTop = '2%';
+    wrapper.style.display = 'flex';
+    wrapper.style.flexDirection = 'column';
+    wrapper.style.alignItems = 'center';
+    wrapper.style.width = '100%';
+    wrapper.style.padding = '0';
+    wrapper.style.boxSizing = 'border-box';
 
     // ===== ROW 1: Verification Type and Verification Group (side by side, centered) =====
     const row1 = document.createElement('div');
-    row1.className = 'form-group row';
-    
-    const spacer1 = document.createElement('div');
-    spacer1.className = 'col-md-3';
+    // No Bootstrap classes - pure flexbox to avoid .row negative margins
+    row1.style.display = 'flex';
+    row1.style.justifyContent = 'center';
+    row1.style.width = '560px';
+    row1.style.maxWidth = '90vw';
+    row1.style.gap = '20px';
+    row1.style.marginBottom = '0';
     
     const verTypeCol = document.createElement('div');
-    verTypeCol.className = 'col-md-3';
-    verTypeCol.style.marginLeft = '4px';
-    verTypeCol.style.width = '98%';
+    verTypeCol.style.flex = '1';
     if (isirTypeFilter) {
-      verTypeCol.appendChild(isirTypeFilter.cloneNode(true));
+      const sel = isirTypeFilter.cloneNode(true);
+      sel.style.width = '100%';
+      verTypeCol.appendChild(sel);
     }
     
     const verGroupCol = document.createElement('div');
-    verGroupCol.className = 'col-md-3';
-    verGroupCol.style.marginLeft = '4px';
-    verGroupCol.style.width = '98%';
+    verGroupCol.style.flex = '1';
     if (verGroupFilter) {
-      verGroupCol.appendChild(verGroupFilter.cloneNode(true));
+      const sel = verGroupFilter.cloneNode(true);
+      sel.style.width = '100%';
+      verGroupCol.appendChild(sel);
     }
     
-    const spacer2 = document.createElement('div');
-    spacer2.className = 'col-md-3';
-    
-    row1.appendChild(spacer1);
     row1.appendChild(verTypeCol);
     row1.appendChild(verGroupCol);
-    row1.appendChild(spacer2);
     
     wrapper.appendChild(row1);
 
     // ===== MAIN CONTAINER: All dropdowns stacked =====
     const mainContainer = document.createElement('div');
-    mainContainer.className = 'col-lg-12';
+    // No Bootstrap classes - pure flexbox to avoid .row negative margins and col padding
     mainContainer.id = 'filterContainer';
     mainContainer.style.opacity = '1';
-
-    const mainFormGroup = document.createElement('div');
-    mainFormGroup.className = 'form-group row';
+    mainContainer.style.display = 'flex';
+    mainContainer.style.flexDirection = 'column';
+    mainContainer.style.alignItems = 'center';
+    mainContainer.style.width = '100%';
 
     const singleCol = document.createElement('div');
-    singleCol.className = 'col-lg-4';
+    singleCol.style.width = '560px';
+    singleCol.style.maxWidth = '90vw';
 
     // Add all dropdowns stacked vertically
-    if (schoolFilter) singleCol.appendChild(schoolFilter.cloneNode(true));
-    if (divisionFilter) singleCol.appendChild(divisionFilter.cloneNode(true));
-    if (academicYearFilter) singleCol.appendChild(academicYearFilter.cloneNode(true));
-    if (departmentFilter) singleCol.appendChild(departmentFilter.cloneNode(true));
-    if (serviceTypeFilter) singleCol.appendChild(serviceTypeFilter.cloneNode(true));
-    if (studentTypeFilter) singleCol.appendChild(studentTypeFilter.cloneNode(true));
+    const stackFilters = [schoolFilter, divisionFilter, academicYearFilter, departmentFilter, serviceTypeFilter, studentTypeFilter];
+    stackFilters.forEach(f => {
+      if (f) {
+        const sel = f.cloneNode(true);
+        sel.style.width = '100%';
+        sel.style.display = 'block';
+        sel.style.marginBottom = '10px';
+        sel.style.boxSizing = 'border-box';
+        singleCol.appendChild(sel);
+      }
+    });
 
-    mainFormGroup.appendChild(singleCol);
+    mainContainer.appendChild(singleCol);
 
     // ===== CHECKBOXES: Horizontal row matching Status Details =====
     const checkboxRow = document.createElement('div');
-    checkboxRow.className = 'col-lg-12 row text-center';
     checkboxRow.style.marginTop = '20px';
+    checkboxRow.style.width = '560px';
+    checkboxRow.style.maxWidth = '90vw';
+    checkboxRow.style.display = 'flex';
+    checkboxRow.style.flexDirection = 'row';
+    checkboxRow.style.justifyContent = 'center';
+    checkboxRow.style.alignItems = 'center';
+    checkboxRow.style.gap = '20px';
 
     // Inactive Schools
     if (includeInactiveSchool) {
@@ -275,12 +292,14 @@ function restructureDashboard() {
       checkboxRow.appendChild(label3);
     }
 
-    mainFormGroup.appendChild(checkboxRow);
+    mainContainer.appendChild(checkboxRow);
 
     // ===== FILTER BUTTON: Centered at bottom =====
     const buttonRow = document.createElement('div');
-    buttonRow.className = 'col-lg-12 row text-center';
     buttonRow.style.marginTop = '20px';
+    buttonRow.style.width = '560px';
+    buttonRow.style.maxWidth = '90vw';
+    buttonRow.style.textAlign = 'center';
     
     if (filterButton) {
       const btn = filterButton.cloneNode(true);
@@ -292,8 +311,7 @@ function restructureDashboard() {
       buttonRow.appendChild(btn);
     }
 
-    mainFormGroup.appendChild(buttonRow);
-    mainContainer.appendChild(mainFormGroup);
+    mainContainer.appendChild(buttonRow);
     wrapper.appendChild(mainContainer);
 
     // ===== ADD HIDDEN INPUTS =====
